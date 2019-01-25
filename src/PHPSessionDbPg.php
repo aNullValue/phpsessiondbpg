@@ -15,7 +15,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
             $this->dbconn = $pghandle;
             $this->tbl = $tblname;
         } else {
-            die('Database handle is not an OK PostgreSQL connection. ');
+            die('In PHPSessionDbPg, database handle is not an OK PostgreSQL connection.');
         }
         if ($maxlifetime > 0) {
             $this->lifetime = $maxlifetime;
@@ -43,7 +43,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         $params = array(
             1 => $session_id,
         );
-        $result = @pg_query_params($this->dbconn, $query, $params);
+        $result = pg_query_params($this->dbconn, $query, $params);
         if ($result && pg_num_rows($result) == 1) {
             $row = pg_fetch_assoc($result);
             if ($row['touch_epoch'] < (time() - $this->lifetime)) {
@@ -76,7 +76,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
             , 2 => $session_data
             , 3 => time(),
         );
-        $result = @pg_query_params($this->dbconn, $query, $params);
+        $result = pg_query_params($this->dbconn, $query, $params);
         if ($result && pg_affected_rows($result) == 1) {
             return true;
         } else {
@@ -93,7 +93,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         $params = array(
             1 => $session_id,
         );
-        $result = @pg_query_params($this->dbconn, $query, $params);
+        $result = pg_query_params($this->dbconn, $query, $params);
         $result_error = pg_result_error($result);
         if ($result_error == false or (strlen($result_error) > 0)) {
             return false;
@@ -114,7 +114,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         $params = array(
             1 => (time() - $uselifetime),
         );
-        $result = @pg_query_params($this->dbconn, $query, $params);
+        $result = pg_query_params($this->dbconn, $query, $params);
         if ($result === false) {
             return false;
         } else {
@@ -125,7 +125,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
     public function get_all_sessions()
     {
         $query = 'SELECT * FROM ' . $this->tbl . ' ORDER BY touch_epoch';
-        $result = @pg_query($this->dbconn, $query);
+        $result = pg_query($this->dbconn, $query);
         if ($result && pg_num_rows($result) > 0) {
             $outarr = array();
             while ($row = pg_fetch_assoc($result)) {
