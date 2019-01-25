@@ -1,0 +1,21 @@
+{
+    "name": "anullvalue/phpsessiondbpg",
+    "type": "library",
+    "description": "PHP7+ Session Handler using PostgreSQL",
+    "authors": [
+        {
+            "name": "Drew Stemen",
+            "email": "drew@anullvalue.net",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "aNullValue\\PHPSessionDbPg\\": "src/"
+        }
+    },
+    "license": "MIT"
+}
