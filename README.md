@@ -1,6 +1,6 @@
 # PHP7+ Session Handler using PostgreSQL
 
-> * Many solutions/projects will not require the use of database-backed PHP session handling. In event yours does, and your project requires PostgreSQL 9.5+ anyway, I wrote this solution for you. *
+> Many solutions/projects will not require the use of database-backed PHP session handling. In event yours does, and your project requires PostgreSQL 9.5+ anyway, I wrote this solution for you.
 
 ## Requirements
 
@@ -9,23 +9,23 @@
 * PostgreSQL connection (via pg_connect, not PDO)
 * Create "session_data" table as follows (table name (but not schema) may vary; this is just an example):
 
-    CREATE TABLE public.session_data
-    (
-        id character varying NOT NULL,
-        data character varying NOT NULL,
-        touch_epoch integer NOT NULL,
-        PRIMARY KEY (id)
-    )
-    WITH (
-        OIDS = FALSE
-    )
-    TABLESPACE pg_default;
+        CREATE TABLE public.session_data
+        (
+            id character varying NOT NULL,
+            data character varying NOT NULL,
+            touch_epoch integer NOT NULL,
+            PRIMARY KEY (id)
+        )
+        WITH (
+            OIDS = FALSE
+        )
+        TABLESPACE pg_default;
 
-    ALTER TABLE public.session_data
-        OWNER to postgres;
+        ALTER TABLE public.session_data
+            OWNER to postgres;
 
-    CREATE INDEX session_data__id ON session_data(id);
-    CREATE INDEX session_data__touch_epoch ON session_data(touch_epoch);
+        CREATE INDEX session_data__id ON session_data(id);
+        CREATE INDEX session_data__touch_epoch ON session_data(touch_epoch);
 
 ## Example code
 
