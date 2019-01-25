@@ -1,5 +1,5 @@
 <?php
-namespace \aNullValue\PHPSessionDbPg;
+namespace aNullValue\PHPSessionDbPg;
 
 class PHPSessionDbPg implements \SessionHandlerInterface
 {
