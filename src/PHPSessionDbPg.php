@@ -95,12 +95,11 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         );
         $result = pg_query_params($this->dbconn, $query, $params);
         $result_error = pg_result_error($result);
-        if ($result_error == false or (strlen($result_error) > 0)) {
+        if ($result_error === false or (strlen($result_error) > 0)) {
             return false;
         } else {
             return true;
         }
-
     }
 
     public function gc($maxlifetime = 0)
