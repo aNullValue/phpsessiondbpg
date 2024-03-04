@@ -1,4 +1,5 @@
 <?php
+
 namespace aNullValue\PHPSessionDbPg;
 
 class PHPSessionDbPg implements \SessionHandlerInterface
@@ -22,22 +23,21 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         } else {
             $this->lifetime = ini_get('session.gc_maxlifetime');
         }
-
     }
 
-    public function open($savePath = null, $sessionName = null)
+    public function open($savePath = null, $sessionName = null): bool
     {
         // do nothing, because the constructor already took care of it
         return true;
     }
 
-    public function close()
+    public function close(): bool
     {
         // do nothing, because we share a database handle, and must not close it simply because we are done with it
         return true;
     }
 
-    public function read($session_id)
+    public function read($session_id): string|bool
     {
         $query = 'SELECT data, touch_epoch FROM ' . $this->tbl . ' WHERE id = $1';
         $params = array(
@@ -59,7 +59,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         return '';
     }
 
-    public function write($session_id, $session_data)
+    public function write($session_id, $session_data): bool
     {
 
         $query = '
@@ -72,9 +72,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         WHERE ' . $this->tbl . '.id = $1;
         ';
         $params = array(
-            1 => $session_id
-            , 2 => $session_data
-            , 3 => time(),
+            1 => $session_id, 2 => $session_data, 3 => time(),
         );
         $result = pg_query_params($this->dbconn, $query, $params);
         if ($result && pg_affected_rows($result) == 1) {
@@ -84,7 +82,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         }
     }
 
-    public function destroy($session_id)
+    public function destroy($session_id): bool
     {
         $query = '
         DELETE FROM ' . $this->tbl . '
@@ -102,7 +100,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         }
     }
 
-    public function gc($maxlifetime = 0)
+    public function gc($maxlifetime = 0): bool
     {
         if ($maxlifetime == 0) {
             $uselifetime = $this->lifetime;
@@ -121,7 +119,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         }
     }
 
-    public function get_all_sessions()
+    public function get_all_sessions(): array|bool
     {
         $query = 'SELECT * FROM ' . $this->tbl . ' ORDER BY touch_epoch';
         $result = pg_query($this->dbconn, $query);
@@ -138,9 +136,8 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         }
     }
 
-    public function get_session_maxlifetime()
+    public function get_session_maxlifetime(): int
     {
         return $this->lifetime;
     }
-
 }

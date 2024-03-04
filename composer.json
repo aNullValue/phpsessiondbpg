@@ -1,7 +1,7 @@
 {
     "name": "anullvalue/phpsessiondbpg",
     "type": "library",
-    "description": "PHP7+ Session Handler using PostgreSQL",
+    "description": "PHP8.2+ Session Handler using PostgreSQL",
     "authors": [
         {
             "name": "Drew Stemen",
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=8.2.0",
         "ext-pgsql": "*"
     },
     "autoload": {

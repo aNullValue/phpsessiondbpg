@@ -4,10 +4,10 @@
 
 ## Requirements
 
-* PostgreSQL 9.5+ (must support "ON CONFLICT DO UPDATE")
-* PHP 7.0+ 
-* PostgreSQL connection (via pg_connect, not PDO)
-* Create "session_data" table as follows (table name (but not schema) may vary; this is just an example):
+- PostgreSQL 9.5+ (must support "ON CONFLICT DO UPDATE")
+- PHP 8.2+
+- PostgreSQL connection (via pg_connect, not PDO)
+- Create "session_data" table as follows (table name (but not schema) may vary; this is just an example):
 
         CREATE TABLE public.session_data
         (
@@ -35,7 +35,7 @@
     session_set_save_handler($sessions_handler, true);
     session_name('MySessionName'); //optional
     session_start();
-    
+
     $_SESSION['something'] = 'foo';
     $_SESSION['something_else'] = 'bar';
     echo session_id(),'<br/>',$_SESSION['something'],'<br />',$_SESSION['something_else'] ;
