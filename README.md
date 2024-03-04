@@ -1,4 +1,4 @@
-# PHP7+ Session Handler using PostgreSQL
+# PHP8.2+ Session Handler using PostgreSQL
 
 > Many solutions/projects will not require the use of database-backed PHP session handling. In event yours does, and your project requires PostgreSQL 9.5+ anyway, I wrote this solution for you.
 
