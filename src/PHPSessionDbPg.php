@@ -37,7 +37,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         return true;
     }
 
-    public function read($session_id): string|bool
+    public function read($session_id): string|false
     {
         $query = 'SELECT data, touch_epoch FROM ' . $this->tbl . ' WHERE id = $1';
         $params = array(
@@ -100,7 +100,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         }
     }
 
-    public function gc($maxlifetime = 0): bool
+    public function gc($maxlifetime = 0): int|false
     {
         if ($maxlifetime == 0) {
             $uselifetime = $this->lifetime;
@@ -115,7 +115,7 @@ class PHPSessionDbPg implements \SessionHandlerInterface
         if ($result === false) {
             return false;
         } else {
-            return true;
+            return 1;
         }
     }
 
